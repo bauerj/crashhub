@@ -1,0 +1,8 @@
+{
+    "github_project": "spesmilo/electrum",
+    "db_name": "crashhub"
+    "db_host": "example.com",
+    "db_port": "3306",
+    "db_user": "root",
+    "db_password": "password"
+}
