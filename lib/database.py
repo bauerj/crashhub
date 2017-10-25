@@ -1,4 +1,6 @@
-from peewee import Model, PostgresqlDatabase, TextField
+import datetime
+
+from peewee import Model, PostgresqlDatabase, TextField, DateTimeField
 from peewee import CharField, ForeignKeyField, IntegerField
 
 from lib import config
@@ -30,5 +32,10 @@ class Crash(BaseModel):
     locale = CharField(max_length=5)
 
 
+class LogEntry(BaseModel):
+    sender_ip = CharField()
+    sent_at = DateTimeField(default=datetime.datetime.now)
+
+
 def create_tables():
-    db.create_tables([CrashKind, Crash], safe=True)
+    db.create_tables([CrashKind, Crash, LogEntry], safe=True)
