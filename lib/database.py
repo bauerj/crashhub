@@ -1,6 +1,6 @@
 import datetime
 
-from peewee import PostgresqlDatabase, MySQLDatabase, SqliteDatabase
+from playhouse.pool import PooledPostgresqlDatabase, PooledMySQLDatabase, PooledSqliteDatabase
 from peewee import Model, TextField, DateTimeField
 from peewee import CharField, ForeignKeyField, IntegerField
 
@@ -8,9 +8,9 @@ from lib import config
 
 try:
     engine = {
-        "postgres": PostgresqlDatabase,
-        "mysql": MySQLDatabase,
-        "sqlite": SqliteDatabase
+        "postgres": PooledPostgresqlDatabase,
+        "mysql": PooledMySQLDatabase,
+        "sqlite": PooledSqliteDatabase
     }[config.get("db_engine", default="postgres")]
 except KeyError:
     raise BaseException("Unknown database engine {}".format(config.get("db_engine")))
