@@ -10,8 +10,16 @@ def read_config(*_):
         config = json.load(f)
 
 
-def get(key):
-    return config[key]
+def get(key, default=None):
+    if key in config:
+        return config[key]
+    if default:
+        return default
+    raise MissingValueError(key)
+
+
+class MissingValueError(BaseException):
+    pass
 
 # Reload config when SIGHUP is sent
 signal.signal(signal.SIGHUP, read_config)

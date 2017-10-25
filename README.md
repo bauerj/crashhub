@@ -6,6 +6,5 @@ This is a simple web service that aggregates crash reports and opens issues on G
 Notes
 -----
 
-- Only Postgres is supported as db backend right now
 - Send SIGHUP to reload config
 - token from config is a "Personal Access Token"

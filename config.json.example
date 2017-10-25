@@ -1,5 +1,7 @@
 {
     "github_project": "spesmilo/electrum",
+    "github_token": "xyz",
+    "db_engine": "postgres",
     "db_name": "crashhub"
     "db_host": "example.com",
     "db_port": "3306",

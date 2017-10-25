@@ -1,12 +1,22 @@
 import datetime
 
-from peewee import Model, PostgresqlDatabase, TextField, DateTimeField
+from peewee import PostgresqlDatabase, MySQLDatabase, SqliteDatabase
+from peewee import Model, TextField, DateTimeField
 from peewee import CharField, ForeignKeyField, IntegerField
 
 from lib import config
 
-db = PostgresqlDatabase(config.get("db_name"), user=config.get('db_user'), password=config.get("db_password"),
-                        host=config.get("db_host"), port=config.get("db_port"))
+try:
+    engine = {
+        "postgres": PostgresqlDatabase,
+        "mysql": MySQLDatabase,
+        "sqlite": SqliteDatabase
+    }[config.get("db_engine", default="postgres")]
+except KeyError:
+    raise BaseException("Unknown database engine {}".format(config.get("db_engine")))
+
+db = engine(config.get("db_name"), user=config.get('db_user'), password=config.get("db_password"),
+            host=config.get("db_host"), port=config.get("db_port"))
 
 
 class BaseModel(Model):
