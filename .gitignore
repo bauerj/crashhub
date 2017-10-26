@@ -56,3 +56,7 @@ __pycache__
 
 # App
 config.json
+
+crashhub.egg-info/
+build
+dist
