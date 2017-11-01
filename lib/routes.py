@@ -34,6 +34,9 @@ def store_crash():
     if not check_rate_limit(request):
         return "Thanks for reporting this issue!"
     crash = json.loads(request.data)
+    # Give Windows paths forward slashes
+    crash["id"]["file"] = crash["id"]["file"].replace("\\", "/")
+    # We only care about the file name
     crash["id"]["file"] = os.path.split(crash["id"]["file"])[1]
     kind, created = CrashKind.get_or_create(**crash["id"])
     del crash["id"]
