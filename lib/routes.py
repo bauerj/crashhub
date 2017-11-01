@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 
 from flask import Flask, request
 from peewee import OperationalError
@@ -33,6 +34,7 @@ def store_crash():
     if not check_rate_limit(request):
         return "Thanks for reporting this issue!"
     crash = json.loads(request.data)
+    crash["id"]["file"] = os.path.split(crash["id"]["file"])[1]
     kind, created = CrashKind.get_or_create(**crash["id"])
     del crash["id"]
     crash["kind_id"] = kind.id
