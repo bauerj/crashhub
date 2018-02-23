@@ -59,7 +59,7 @@ This config could be used to deploy it with mariadb and nginx on Docker:
         volumes:
           - /var/volumes/crashhub/config.json:/app/config.json
 
-An nginx configuration file could be as simple as this:
+An nginx server configuration file could be as simple as this:
 
     server {
         server_name crashhub.bauerj.eu;
