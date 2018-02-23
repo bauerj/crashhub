@@ -1,5 +1,5 @@
 FROM python:3
-MAINTAINER Johann Bauer bauerj@bauerj.eu
+LABEL maintainer="Johann Bauer <bauerj@bauerj.eu>"
 
 COPY . /app
 RUN python /app/setup.py install
