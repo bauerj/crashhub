@@ -23,7 +23,7 @@ def setup():
         pass
 
 
-@app.after_request
+@app.teardown_request
 def stop(response):
     db.close()
     return response
