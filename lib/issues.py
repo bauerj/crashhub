@@ -1,4 +1,5 @@
 from lib.database import Crash, CrashKind
+from playhouse.shortcuts import model_to_dict
 
 template = """
 Crash Report
@@ -40,7 +41,7 @@ def format_issue(kind_id):
     reporter_table = ""
     additional = []
     for c in crashes:
-        reporter_table += reporter_row.format(**c._data)
+        reporter_table += reporter_row.format(**model_to_dict(c))
         if c.description:
             additional.append(c.description)
     v = {
