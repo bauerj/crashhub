@@ -28,7 +28,7 @@ Additional Information
 
 """
 
-reporter_row = """| {electrum_version}  | {os} | {wallet_type} | {locale} |
+reporter_row = """| {app_version}  | {os} | {wallet_type} | {locale} |
 """
 
 no_info = "The reporting user(s) did not provide additional information."
