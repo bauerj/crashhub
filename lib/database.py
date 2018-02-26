@@ -36,7 +36,7 @@ class CrashKind(BaseModel):
 
 class Crash(BaseModel):
     kind_id = ForeignKeyField(CrashKind)
-    electrum_version = CharField()
+    app_version = CharField()
     os = TextField()
     wallet_type = CharField()
     exc_string = TextField()
