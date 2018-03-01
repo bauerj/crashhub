@@ -1,8 +1,14 @@
 crashhub
 ========
 
-[![Build Status](https://travis-ci.org/bauerj/crashhub.svg?branch=master)](https://travis-ci.org/bauerj/crashhub) 
-[![Coverage Status](https://coveralls.io/repos/github/bauerj/crashhub/badge.svg?branch=master)](https://coveralls.io/github/bauerj/crashhub?branch=master)
+
+[![Travis](https://img.shields.io/travis/bauerj/crashhub.svg?style=flat-square)](https://travis-ci.org/bauerj/crashhub) 
+[![Coveralls](https://img.shields.io/coveralls/github/bauerj/crashhub.svg?style=flat-square)](https://coveralls.io/github/bauerj/crashhub) 
+[![License](https://img.shields.io/github/license/bauerj/crashhub.svg?style=flat-square)](https://github.com/bauerj/crashhub/blob/master/LICENSE) 
+[![Docker build](https://img.shields.io/docker/automated/bauerj/crashhub.svg)](https://hub.docker.com/r/bauerj/crashhub/) 
+[![Image Size](https://img.shields.io/microbadger/image-size/bauerj/crashhub.svg)](https://hub.docker.com/r/bauerj/crashhub/) 
+
+
 
 This is a simple web service that aggregates crash reports and opens issues on Github.
 
