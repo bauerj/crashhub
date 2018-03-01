@@ -5,8 +5,8 @@ crashhub
 [![Travis](https://img.shields.io/travis/bauerj/crashhub.svg?style=flat-square)](https://travis-ci.org/bauerj/crashhub) 
 [![Coveralls](https://img.shields.io/coveralls/github/bauerj/crashhub.svg?style=flat-square)](https://coveralls.io/github/bauerj/crashhub) 
 [![License](https://img.shields.io/github/license/bauerj/crashhub.svg?style=flat-square)](https://github.com/bauerj/crashhub/blob/master/LICENSE) 
-[![Docker build](https://img.shields.io/docker/automated/bauerj/crashhub.svg)](https://hub.docker.com/r/bauerj/crashhub/) 
-[![Image Size](https://img.shields.io/microbadger/image-size/bauerj/crashhub.svg)](https://hub.docker.com/r/bauerj/crashhub/) 
+[![Docker build](https://img.shields.io/docker/automated/bauerj/crashhub.svg?style=flat-square)](https://hub.docker.com/r/bauerj/crashhub/) 
+[![Image Size](https://img.shields.io/microbadger/image-size/bauerj/crashhub.svg?style=flat-square)](https://hub.docker.com/r/bauerj/crashhub/) 
 
 
 
