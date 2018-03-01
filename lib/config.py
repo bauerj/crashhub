@@ -21,6 +21,9 @@ def get(key, default=None):
 class MissingValueError(BaseException):
     pass
 
-# Reload config when SIGHUP is sent
-signal.signal(signal.SIGHUP, read_config)
+try:
+    # Reload config when SIGHUP is sent
+    signal.signal(signal.SIGHUP, read_config)
+except AttributeError:
+    pass  # Windows
 read_config()
