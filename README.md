@@ -1,6 +1,9 @@
 crashhub
 ========
 
+[![Build Status](https://travis-ci.org/bauerj/crashhub.svg?branch=master)](https://travis-ci.org/bauerj/crashhub) 
+[![Coverage Status](https://coveralls.io/repos/github/bauerj/crashhub/badge.svg?branch=master)](https://coveralls.io/github/bauerj/crashhub?branch=master)
+
 This is a simple web service that aggregates crash reports and opens issues on Github.
 
 Config file
