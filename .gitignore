@@ -55,7 +55,7 @@ __pycache__
 *.pyc
 
 # App
-config.json
+/config.json
 
 crashhub.egg-info/
 build

@@ -1,0 +1,10 @@
+{
+    "github_project": "bauerj/beam",
+    "github_token": "123",
+    "db_engine": "sqlite",
+    "db_name": "/tmp/crashhub.sqlite3",
+    "db_host": "",
+    "db_port": "",
+    "db_user": "",
+    "db_password": ""
+}

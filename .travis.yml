@@ -1,0 +1,11 @@
+sudo: false
+language: python
+python:
+  - 3.6
+install:
+  - python setup.py install
+  - pip install pytest pytest-cov pytest-xdist coveralls pytest-mock
+script:
+  - pytest -n 4 --cov=lib
+after_success:
+  - coveralls
