@@ -43,7 +43,7 @@ def store_crash():
     crash["kind_id"] = kind.id
     Crash.create(**crash)
     title, body = issues.format_issue(kind.id)
-    if created:
+    if kind.github_id < 0:
         issue = github.report_issue(title, body)
         kind.github_id = issue
         kind.save()
