@@ -48,7 +48,7 @@ def store_crash():
         kind.github_id = issue
         kind.save()
     else:
-        github.update_issue(kind.github_id, title, body)
+        github.update_issue(kind.github_id, body)
     url = "https://github.com/{}/issues/{}".format(config.get("github_project"), kind.github_id)
     return """
     Thanks for reporting this issue! You can track further progress on <a href="{url}">GitHub</a>.

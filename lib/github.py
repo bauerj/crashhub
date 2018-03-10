@@ -12,6 +12,6 @@ def report_issue(title, body):
     return issue.number
 
 
-def update_issue(id, title, body):
-    repo.get_issue(id).edit(title, body)
+def update_issue(id, body):
+    repo.get_issue(id).edit(body=body)
     return id

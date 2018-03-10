@@ -42,7 +42,7 @@ class Crash(BaseModel):
     exc_string = TextField()
     stack = TextField()
     description = TextField()
-    locale = CharField(max_length=5)
+    locale = CharField(max_length=5, default="")
 
 
 class LogEntry(BaseModel):
