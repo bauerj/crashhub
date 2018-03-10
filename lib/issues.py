@@ -59,5 +59,7 @@ def format_issue(kind_id):
     else:
         report += no_info
     title = kind.type + ": " + crashes[0].exc_string
+    if len(title) > 400:
+        title = title[:400] + "..."
     return title, report
 
