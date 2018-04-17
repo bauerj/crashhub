@@ -30,9 +30,27 @@ def stop(response):
 
 
 @app.route('/crash', methods=['POST'])
-def store_crash():
+def store_crash_legacy():
+    response = store_crash(request)
+    if response["status"] != "reported":
+        return response["text"]
+    else:
+        return response["text"].replace("GitHub",
+                                        """<a href="{}">GitHub</a>""".format(response["location"]))
+
+
+@app.route('/crash.json', methods=['POST'])
+def store_crash_v2():
+    return json.dumps(store_crash(request))
+
+
+def store_crash(request):
     if not check_rate_limit(request):
-        return "Thanks for reporting this issue!"
+        return {
+            "text": "Thanks for reporting this issue!",
+            "status": "skip",
+            "location": None
+        }
     crash = json.loads(request.data)
     # Give Windows paths forward slashes
     crash["id"]["file"] = crash["id"]["file"].replace("\\", "/")
@@ -50,9 +68,11 @@ def store_crash():
     else:
         github.update_issue(kind.github_id, body)
     url = "https://github.com/{}/issues/{}".format(config.get("github_project"), kind.github_id)
-    return """
-    Thanks for reporting this issue! You can track further progress on <a href="{url}">GitHub</a>.
-    """.format(url=url)
+    return {
+        "text": "Thanks for reporting this issue! You can track further progress on GitHub.",
+        "status": "reported",
+        "location": url
+    }
 
 
 def check_rate_limit(request):
