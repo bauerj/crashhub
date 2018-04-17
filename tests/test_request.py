@@ -1,3 +1,5 @@
+import json
+
 import github
 import os
 import pytest
@@ -54,7 +56,13 @@ def test_updated(crashhub_client):
     github.Github.return_value.get_repo.return_value.create_issue.assert_called_once()
     github.Github.return_value.get_repo.return_value.get_issue.assert_called_once()
 
+
 def test_rate_limit(crashhub_client):
     for _ in range(5):
         response = crashhub_client.post("/crash", data=request)
     assert b"You can track further progress on" not in response.data
+
+
+def test_v2(crashhub_client):
+    response = json.loads(crashhub_client.post("/crash.json", data=request).data)
+    assert response["status"] == "reported"
