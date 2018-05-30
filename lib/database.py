@@ -1,16 +1,17 @@
 import datetime
 
 from playhouse.pool import PooledPostgresqlDatabase, PooledMySQLDatabase, PooledSqliteDatabase
-from peewee import Model, TextField, DateTimeField
+from playhouse.migrate import migrate, PostgresqlMigrator, SqliteMigrator, MySQLMigrator
+from peewee import Model, TextField, DateTimeField, OperationalError
 from peewee import CharField, ForeignKeyField, IntegerField
 
 from lib import config
 
 try:
-    engine = {
-        "postgres": PooledPostgresqlDatabase,
-        "mysql": PooledMySQLDatabase,
-        "sqlite": PooledSqliteDatabase
+    engine, migrator_class = {
+        "postgres": (PooledPostgresqlDatabase, PostgresqlMigrator),
+        "mysql": (PooledMySQLDatabase, MySQLMigrator),
+        "sqlite": (PooledSqliteDatabase, SqliteMigrator),
     }[config.get("db_engine", default="postgres")]
 except KeyError:
     raise BaseException("Unknown database engine {}".format(config.get("db_engine")))
@@ -20,7 +21,6 @@ if engine == PooledSqliteDatabase:
 else:
     db = engine(config.get("db_name"), user=config.get('db_user'), password=config.get("db_password"),
                 host=config.get("db_host"), port=int(config.get("db_port")))
-
 
 class BaseModel(Model):
     class Meta:
@@ -43,6 +43,7 @@ class Crash(BaseModel):
     stack = TextField()
     description = TextField()
     locale = CharField(max_length=5, default="")
+    python_version = CharField()
 
 
 class LogEntry(BaseModel):
@@ -52,3 +53,12 @@ class LogEntry(BaseModel):
 
 def create_tables():
     db.create_tables([CrashKind, Crash, LogEntry], safe=True)
+
+    try:
+        migrator = migrator_class(db)
+        migrate(
+            migrator.add_column('Crash', 'python_version', CharField(default='')),
+        )
+    except OperationalError as e:
+        if e.args != ("duplicate column name: python_version",):
+            raise e

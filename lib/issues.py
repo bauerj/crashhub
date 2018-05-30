@@ -20,8 +20,8 @@ Reporter
 
 This issue was reported by {user_count} user(s):
 
-| Electrum Version  | Operating System  | Wallet Type  | Locale |
-|---|---|---|---|
+| Electrum Version  | Python Version | Operating System  | Wallet Type  | Locale |
+|---|---|---|---|---|
 {reporter_table}
 
 Additional Information
@@ -29,7 +29,7 @@ Additional Information
 
 """
 
-reporter_row = """| {app_version}  | {os} | {wallet_type} | {locale} |
+reporter_row = """| {app_version}  | {python_version} | {os} | {wallet_type} | {locale} |
 """
 
 no_info = "The reporting user(s) did not provide additional information."
@@ -41,7 +41,10 @@ def format_issue(kind_id):
     reporter_table = ""
     additional = []
     for c in crashes:
-        reporter_table += reporter_row.format(**model_to_dict(c))
+        reporter_dict = model_to_dict(c)
+        if "python_version" not in reporter_dict:
+            reporter_dict["python_version"] = "-"
+        reporter_table += reporter_row.format(**reporter_dict)
         if c.description:
             additional.append(c.description)
     v = {
