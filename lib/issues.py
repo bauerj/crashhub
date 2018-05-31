@@ -41,10 +41,7 @@ def format_issue(kind_id):
     reporter_table = ""
     additional = []
     for c in crashes:
-        reporter_dict = model_to_dict(c)
-        if "python_version" not in reporter_dict:
-            reporter_dict["python_version"] = "-"
-        reporter_table += reporter_row.format(**reporter_dict)
+        reporter_table += reporter_row.format(**model_to_dict(c))
         if c.description:
             additional.append(c.description)
     v = {

@@ -43,7 +43,7 @@ class Crash(BaseModel):
     stack = TextField()
     description = TextField()
     locale = CharField(max_length=5, default="")
-    python_version = CharField()
+    python_version = CharField(default='')
 
 
 class LogEntry(BaseModel):
@@ -54,11 +54,11 @@ class LogEntry(BaseModel):
 def create_tables():
     db.create_tables([CrashKind, Crash, LogEntry], safe=True)
 
+    # This will error if the column has already been added.
     try:
         migrator = migrator_class(db)
         migrate(
             migrator.add_column('Crash', 'python_version', CharField(default='')),
         )
     except OperationalError as e:
-        if e.args != ("duplicate column name: python_version",):
-            raise e
+        pass
