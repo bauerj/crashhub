@@ -1,4 +1,5 @@
 {
+    "app_name": "Beam",
     "github_project": "bauerj/beam",
     "github_token": "123",
     "db_engine": "sqlite",
