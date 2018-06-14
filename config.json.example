@@ -1,4 +1,5 @@
 {
+    "app_name": "Electrum",
     "github_project": "spesmilo/electrum",
     "github_token": "xyz",
     "db_engine": "postgres",

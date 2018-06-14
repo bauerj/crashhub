@@ -1,4 +1,5 @@
 from lib.database import Crash, CrashKind
+from lib import config
 from playhouse.shortcuts import model_to_dict
 
 template = """
@@ -20,7 +21,7 @@ Reporter
 
 This issue was reported by {user_count} user(s):
 
-| Electrum Version  | Python Version | Operating System  | Wallet Type  | Locale |
+| {app_name} Version  | Python Version | Operating System  | Wallet Type  | Locale |
 |---|---|---|---|---|
 {reporter_table}
 
@@ -49,7 +50,8 @@ def format_issue(kind_id):
         "type": kind.type,
         "exc_string": crashes[0].exc_string,
         "reporter_table": reporter_table,
-        "user_count": len(crashes)
+        "user_count": len(crashes),
+        "app_name": config.get("app_name")
     }
     report = template.format(**v)
     if additional:
