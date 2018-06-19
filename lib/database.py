@@ -58,7 +58,7 @@ def create_tables():
     try:
         migrator = migrator_class(db)
         migrate(
-            migrator.add_column('Crash', 'python_version', CharField(default='')),
+            migrator.add_column('crash', 'python_version', CharField(default='')),
         )
     except OperationalError as e:
         pass
