@@ -22,6 +22,7 @@ else:
     db = engine(config.get("db_name"), user=config.get('db_user'), password=config.get("db_password"),
                 host=config.get("db_host"), port=int(config.get("db_port")))
 
+
 class BaseModel(Model):
     class Meta:
         database = db

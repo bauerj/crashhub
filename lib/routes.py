@@ -67,6 +67,10 @@ def store_crash(request):
         kind.save()
     else:
         github.update_issue(kind.github_id, body)
+        if github.issue_is_closed(kind.github_id):
+            body = issues.format_reopen_comment(kind.id, github.issue_closed_by(kind.github_id))
+            if body:
+                github.respond(kind.github_id, body)
     url = "https://github.com/{}/issues/{}".format(config.get("github_project"), kind.github_id)
     return {
         "text": "Thanks for reporting this issue! You can track further progress on GitHub.",

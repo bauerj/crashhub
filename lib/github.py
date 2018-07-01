@@ -1,4 +1,5 @@
 from github import Github
+from github.GithubObject import NotSet
 
 from lib import config
 
@@ -15,3 +16,15 @@ def report_issue(title, body):
 def update_issue(id, body):
     repo.get_issue(id).edit(body=body)
     return id
+
+
+def issue_is_closed(id):
+    return repo.get_issue(id).closed_by is not NotSet
+
+
+def issue_closed_by(id):
+    return repo.get_issue(id).closed_by
+
+
+def respond(id, body):
+    repo.get_issue(id).create_comment(body)

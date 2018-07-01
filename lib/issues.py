@@ -1,6 +1,10 @@
+from distutils.version import LooseVersion
+
 from lib.database import Crash, CrashKind
 from lib import config
 from playhouse.shortcuts import model_to_dict
+
+from lib.util import get_greeting
 
 template = """
 Crash Report
@@ -35,6 +39,24 @@ reporter_row = """| {app_version}  | {python_version} | {os} | {wallet_type} | {
 
 no_info = "The reporting user(s) did not provide additional information."
 
+template_reopen = """
+{greeting} @{user_closed},
+
+I just received another crash report related to this issue. The crash occured on {app_name} {version}.
+I'm not sure which versions of {app_name} include the fix but this is the first report from anything
+newer than {min_version} since you closed the issue.
+
+Could you please check if this issue really is resolved? Here is the traceback that I just collected:
+
+```Python traceback
+{stack}
+{type}: {exc_string}
+```
+
+
+~ With robotic wishes
+"""
+
 
 def format_issue(kind_id):
     kind = CrashKind.get(id=kind_id)
@@ -65,3 +87,24 @@ def format_issue(kind_id):
         title = title[:400] + "..."
     return title, report
 
+
+def format_reopen_comment(kind_id, closed_by):
+    crashes = Crash.select().where(Crash.kind_id == kind_id)
+    crashes, new_crash = crashes[:-1], crashes[-1:][0]
+    min_version = None
+    for c in crashes:
+        if not min_version or LooseVersion(min_version) < LooseVersion(c.app_version):
+            min_version = c.app_version
+    if not LooseVersion(min_version) < LooseVersion(new_crash.app_version):
+        return None
+    v = {
+        "greeting": get_greeting(),
+        "user_closed": closed_by,
+        "app_name": config.get("app_name"),
+        "version": new_crash.app_version,
+        "min_version": min_version,
+        "stack": new_crash.stack,
+        "type": new_crash.type,
+        "exc_string": new_crash.exc_string
+    }
+    return template_reopen.format(**v)
