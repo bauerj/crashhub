@@ -1,10 +1,12 @@
 FROM python:3
 LABEL maintainer="Johann Bauer <bauerj@bauerj.eu>"
 
-COPY . /app
-RUN python /app/setup.py install
 RUN pip install uwsgi PyMySQL
 RUN useradd crashhub
+
+COPY . /app
+
+RUN python /app/setup.py install
 
 USER crashhub
 

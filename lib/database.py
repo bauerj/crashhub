@@ -2,7 +2,7 @@ import datetime
 
 from playhouse.pool import PooledPostgresqlDatabase, PooledMySQLDatabase, PooledSqliteDatabase
 from playhouse.migrate import migrate, PostgresqlMigrator, SqliteMigrator, MySQLMigrator
-from peewee import Model, TextField, DateTimeField, OperationalError
+from peewee import Model, TextField, DateTimeField, DatabaseError
 from peewee import CharField, ForeignKeyField, IntegerField
 
 from lib import config
@@ -61,5 +61,5 @@ def create_tables():
         migrate(
             migrator.add_column('crash', 'python_version', CharField(default='')),
         )
-    except OperationalError as e:
+    except DatabaseError:
         pass
