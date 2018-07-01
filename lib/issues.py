@@ -54,7 +54,7 @@ Could you please check if this issue really is resolved? Here is the traceback t
 ```
 
 
-~ With robotic wishes
+~ _With robotic wishes_
 """
 
 
@@ -100,7 +100,7 @@ def format_reopen_comment(kind_id, closed_by):
         return None
     v = {
         "greeting": get_greeting(),
-        "user_closed": closed_by,
+        "user_closed": closed_by.login,
         "app_name": config.get("app_name"),
         "version": new_crash.app_version,
         "min_version": min_version,
