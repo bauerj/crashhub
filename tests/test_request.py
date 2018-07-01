@@ -67,7 +67,7 @@ def test_v2(crashhub_client):
     assert response["status"] == "reported"
 
 
-def test_reopen(crasshub_client):
+def test_reopen(crashhub_client):
     crashhub_client.post("/crash", data=request)
     crashhub_client.post("/crash", data=request)
     github.Github.return_value.get_repo.return_value.create_comment.assert_not_called()
