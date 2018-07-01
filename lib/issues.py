@@ -91,6 +91,8 @@ def format_issue(kind_id):
 def format_reopen_comment(kind_id, closed_by):
     kind = CrashKind.get(id=kind_id)
     crashes = Crash.select().where(Crash.kind_id == kind_id)
+    if len(crashes) < 2:
+        return None
     crashes, new_crash = crashes[:-1], crashes[-1:][0]
     min_version = None
     for c in crashes:
