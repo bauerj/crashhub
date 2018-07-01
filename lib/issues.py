@@ -89,6 +89,7 @@ def format_issue(kind_id):
 
 
 def format_reopen_comment(kind_id, closed_by):
+    kind = CrashKind.get(id=kind_id)
     crashes = Crash.select().where(Crash.kind_id == kind_id)
     crashes, new_crash = crashes[:-1], crashes[-1:][0]
     min_version = None
@@ -104,7 +105,7 @@ def format_reopen_comment(kind_id, closed_by):
         "version": new_crash.app_version,
         "min_version": min_version,
         "stack": new_crash.stack,
-        "type": new_crash.type,
+        "type": kind.type,
         "exc_string": new_crash.exc_string
     }
     return template_reopen.format(**v)
