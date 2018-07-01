@@ -15,11 +15,7 @@ def get(key, default=None):
         return config[key]
     if default:
         return default
-    raise MissingValueError(key)
-
-
-class MissingValueError(BaseException):
-    pass
+    raise KeyError(key)
 
 try:
     # Reload config when SIGHUP is sent

@@ -2,8 +2,9 @@ import datetime
 import json
 import os
 
-from flask import Flask, request
+from flask import Flask, request, abort, render_template
 from peewee import OperationalError
+from playhouse.shortcuts import model_to_dict
 
 from lib import issues, github, config
 from lib.database import db, create_tables, CrashKind, Crash, LogEntry
@@ -77,6 +78,17 @@ def store_crash(request):
         "status": "reported",
         "location": url
     }
+
+
+@app.route('/crash/<id>', methods=['GET'])
+def show_crash(id):
+    crash = Crash.get_by_id(id)
+    kind = CrashKind.get(id=crash.kind_id)
+    if not crash:
+        abort(404)
+    v = model_to_dict(crash)
+    v.update(model_to_dict(kind))
+    return render_template('crash.html', **v)
 
 
 def check_rate_limit(request):
