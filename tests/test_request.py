@@ -65,3 +65,11 @@ def test_rate_limit(crashhub_client):
 def test_v2(crashhub_client):
     response = json.loads(crashhub_client.post("/crash.json", data=request).data)
     assert response["status"] == "reported"
+
+
+def test_reopen(crasshub_client):
+    crashhub_client.post("/crash", data=request)
+    crashhub_client.post("/crash", data=request)
+    github.Github.return_value.get_repo.return_value.create_comment.assert_not_called()
+    crashhub_client.post("/crash", data=request.replace("3.0.3", "3.1.2"))
+    github.Github.return_value.get_repo.return_value.create_comment.assert_called_once()
