@@ -16,11 +16,11 @@ def run():
 
 
 @click.command()
-@click.option('--dry-run', default=True, help='Don\'t actually change anything.')
-def update_posts(dry_run):
-    if dry_run:
+@click.option('--no-dry-run', is_flag=True, help='Don\'t actually change anything.')
+def update_posts(no_dry_run):
+    if not no_dry_run:
         print("Dry-run, changes will not be performed.")
-    util.update_posts(dry_run)
+    util.update_posts(not no_dry_run)
 
 
 cli.add_command(update_posts)
