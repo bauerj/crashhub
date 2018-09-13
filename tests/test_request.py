@@ -72,4 +72,11 @@ def test_reopen(crashhub_client):
     crashhub_client.post("/crash", data=request)
     github.Github.return_value.get_repo.return_value.create_comment.assert_not_called()
     crashhub_client.post("/crash", data=request.replace("3.0.3", "3.1.2"))
+    # The issue is still open
+    github.Github.return_value.get_repo.return_value.get_issue.return_value.create_comment.assert_not_called()
+    github.Github.return_value.get_repo.return_value.closed_by = "bauerj"
+    crashhub_client.post("/crash", data=request.replace("3.0.3", "3.1.2"))
+    # The report is not new
+    github.Github.return_value.get_repo.return_value.get_issue.return_value.create_comment.assert_not_called()
+    crashhub_client.post("/crash", data=request.replace("3.0.3", "3.1.9"))
     github.Github.return_value.get_repo.return_value.get_issue.return_value.create_comment.assert_called_once()
