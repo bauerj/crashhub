@@ -64,7 +64,7 @@ def format_issue(kind_id):
     reporter_table = ""
     additional = []
     for c in crashes:
-        reporter_table += reporter_row.format(**model_to_dict(c))
+        reporter_table += reporter_row.format(**model_to_dict(c)).replace("\n", " ")
         if c.description:
             additional.append(c.description)
     v = {
