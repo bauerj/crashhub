@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 
-from flask import Flask, request
+from flask import Flask, request, escape
 from peewee import OperationalError
 
 from lib import issues, github, config
@@ -42,6 +42,12 @@ def store_crash_legacy():
 @app.route('/crash.json', methods=['POST'])
 def store_crash_v2():
     return json.dumps(store_crash(request))
+
+
+@app.route('/crash/<id>')
+def show_crash(id):
+    crash = Crash.get(Crash.id == id)
+    return "<pre>{}</pre>".format(escape(crash.stack))
 
 
 def store_crash(request):

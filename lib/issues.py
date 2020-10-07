@@ -25,8 +25,8 @@ Reporter
 
 This issue was reported by {user_count} user(s):
 
-| {app_name} Version  | Python Version | Operating System  | Wallet Type  | Locale |
-|---|---|---|---|---|
+| {app_name} Version  | Python Version | Operating System  | Wallet Type  | Locale | Stack |
+|---|---|---|---|---|---|
 {reporter_table}
 
 Additional Information
@@ -34,7 +34,7 @@ Additional Information
 
 """
 
-reporter_row = """| {app_version}  | {python_version} | {os} | {wallet_type} | {locale} |
+reporter_row = """| {app_version}  | {python_version} | {os} | {wallet_type} | {locale} | [ℹ]({stack_url}) |
 """
 
 no_info = "The reporting user(s) did not provide additional information."
@@ -64,7 +64,8 @@ def format_issue(kind_id):
     reporter_table = ""
     additional = []
     for c in crashes:
-        reporter_table += reporter_row.format(**model_to_dict(c)).replace("\n", " ") + "\n"
+        stack_url = config.get("external_url") + "/crash/" + str(c.id)
+        reporter_table += reporter_row.format(stack_url=stack_url, **model_to_dict(c)).replace("\n", " ") + "\n"
         if c.description:
             additional.append(c.description)
     v = {
